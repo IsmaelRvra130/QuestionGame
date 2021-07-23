@@ -1,5 +1,47 @@
 <!DOCTYPE html>
 <html lang>
+    <style>
+
+        #instructions{
+
+            font-style: bold;
+            font-size: 75px;
+            font-family: 'Times New Roman', Times, serif;
+            color: red;
+            position: center;
+            border-style: double;
+            margin-left: 20px;
+            text-align: center;
+            margin-bottom: 60px;
+
+        }
+
+
+        #question{
+            font-style: bold;
+            font-size: 55px;
+            font-family: 'Times New Roman', Times, serif;
+            color: blue;
+            position: center;
+            border-style: double;
+            margin-left: 50px;
+            text-align: center;
+        }
+
+        #score{
+
+            font-style: bold;
+            font-size: 55px;
+            font-family: 'Times New Roman', Times, serif;
+            color: rgb(184, 115, 236);
+            position: center;
+            border-style: double;
+            margin-left: 20px;
+            text-align: center;
+
+        }
+    </style>
+
     <head>
         <meta charset="UTF-8">
         <title>Question Game</title>
@@ -8,11 +50,9 @@
         </style>
     </head>
     <body>
-        <h1></h1>
-        <h2></h2>
-
-
-
+        <div id ="instructions">Press "T" for True or "F" for Fasle!!</div>
+        <div id = "question"></div><br>
+        <div id = "score"></div>
 
 
     <script>
@@ -34,13 +74,66 @@ var gameQuestions = [
     {q: "Flamingo's eat shrimp?", a: "t"},
     {q: "Fish need water to breath?", a: "t"}
 ]
+ // Start game with score of 0.
+var score = 0;
+
+// Variable to hold index of current question.
+var questionIndex = 0;
 
 // * Then create code that will ask the user questions, one by one. The user must answer by hitting t (for true) or f (for false).
+function getQuestion(){
+    if (questionIndex <= (gameQuestions.length - 1 )){
+        document.querySelector("#question").innerHTML = gameQuestions[questionIndex].q;
+    } 
+    else {
+        document.querySelector("#question").innerHTML = "Game Over!";
+        document.querySelector("#score").innerHTML = "Final Score: " + score + " out of " + gameQuestions.length;
+    }
+}
+
+function updateScore() {
+    document.querySelector("#score").innerHTML = "Score: " + score;
+}
+
+// MAIN PROCESS
+//=======================================================================
+ 
+// Calling functions to start game.
+getQuestion();
+updateScore();
+
+document.onkeypress = function(event){
+    //If there are no more questions, stop the function.
+    if (questionIndex === question.length){
+        return;
+    }
+    //Finds the key pressed,makes it lowercase.
+    var userInput = event.key.toLowerCase();
+
+    //ONLY run code if "t" or "f" were pressed.
+    if (userInput === "t" || userInput === "f") {
+        
+
+        if(userInput === gameQuestions[questionIndex].a){
+            alert("Correcttoo!!");
+            score++
+            updateScore();
+        }
+        else {
+            alert(
+                "NOpeee! Wrong!!"
+            )
+        }
+
+        questionIndex++;
+        getQuestion();
+    }
+};
+
 
 // * Check the user's answer against the correct answer, and provide them with an alert telling them if they are right or wrong.
 
-// * Keep track of the user's score.
-
+// * Keep track of the user
 // * Don't worry about having DRY code to start with. Just focus on getting working code first.
 
 
